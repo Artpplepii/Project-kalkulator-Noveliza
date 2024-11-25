@@ -1,91 +1,62 @@
 # Project-kalkulator-Noveliza
+
 import 'dart:io';
 
-class Operation {
-  late int nilaiAwal, nilaiAkhir;
+void main() {
+  print("=== Kalkulator Sederhana ===");
 
-  Operation(int nilaiAwal, int nilaiAkhir) {
-    this.nilaiAwal = nilaiAwal;
-    this.nilaiAkhir = nilaiAkhir;
-  }
-
-  tambah(int input1, int input2) {
-    return input1 + input2;
-  }
-
-  kurang(int input1, int input2) {
-    return input1 - input2;
-  }
-
-  kali(int input1, int input2) {
-    return input1 * input2;
-  }
-
-  bagi(int input1, int input2) {
-    return input1 / input2;
-  }
-
-  modulus(int input1, int input2) {
-    return input1 % input2;
-  }
-}
-
-void kalkulator() {
-  print("Kalkulator sederhana\n");
-
+  // Input angka pertama
   stdout.write("Masukkan angka pertama: ");
-  int? angka1 = int.parse(stdin.readLineSync()!);
+  double? num1 = double.tryParse(stdin.readLineSync()!);
 
+  if (num1 == null) {
+    print("Input tidak valid. Silakan masukkan angka.");
+    return;
+  }
+
+  // Input angka kedua
   stdout.write("Masukkan angka kedua: ");
-  int? angka2 = int.parse(stdin.readLineSync()!);
+  double? num2 = double.tryParse(stdin.readLineSync()!);
 
-  stdout.write(
-      "Pilih operasi. Opsinya ada tambah(+), kurang(-), kali(*), bagi(/), modulus(%): ");
-  String? choice = stdin.readLineSync()!.toLowerCase();
-
-  Operation operation = new Operation(10, 20);
-
-  // clear terminal
-  if (Platform.isWindows) {
-    print(Process.runSync("cls", [], runInShell: true).stdout);
-  } else {
-    print(Process.runSync("clear", [], runInShell: true).stdout);
+  if (num2 == null) {
+    print("Input tidak valid. Silakan masukkan angka.");
+    return;
   }
 
+  // Pilih operasi
+  print("Pilih operasi:");
+  print("1. Penjumlahan (+)");
+  print("2. Pengurangan (-)");
+  print("3. Perkalian (*)");
+  print("4. Pembagian (/)");
+  stdout.write("Masukkan pilihan (1/2/3/4): ");
+  String? choice = stdin.readLineSync();
+
+  double result;
   switch (choice) {
-    case "+":
-      print("Hasilnya: ${operation.tambah(angka1, angka2)}");
-      return;
-
-    case "-":
-      print("Hasilnya: ${operation.kurang(angka1, angka2)}");
-      return;
-
-    case "*":
-      print("Hasilnya: ${operation.kali(angka1, angka2)}");
-      return;
-
-    case "/":
-      print("Hasilnya: ${operation.bagi(angka1, angka2)}");
-      return;
-
-    case "%":
-      print("Hasilnya: ${operation.modulus(angka1, angka2)}");
-      return;
-
+    case '1':
+      result = num1 + num2;
+      print("Hasil: $num1 + $num2 = $result");
+      break;
+    case '2':
+      result = num1 - num2;
+      print("Hasil: $num1 - $num2 = $result");
+      break;
+    case '3':
+      result = num1 * num2;
+      print("Hasil: $num1 * $num2 = $result");
+      break;
+    case '4':
+      if (num2 == 0) {
+        print("Kesalahan: Pembagian dengan nol tidak diperbolehkan.");
+      } else {
+        result = num1 / num2;
+        print("Hasil: $num1 / $num2 = $result");
+      }
+      break;
     default:
-      print("Maaf, operator yang anda masukkan tidak valid!");
-      return;
+      print("Pilihan tidak valid.");
   }
-}
 
-void main(List<String> args) {
-  kalkulator();
-
-  stdout.write("\nUlang lagi? (yes or no) : ");
-  String? isRepeat = stdin.readLineSync()!.toLowerCase();
-
-  isRepeat == "yes"
-      ? kalkulator()
-      : print("\nTerima kasih telah memakai program kalkulator sederhana ini!");
+  print("=== Program selesai ===");
 }
